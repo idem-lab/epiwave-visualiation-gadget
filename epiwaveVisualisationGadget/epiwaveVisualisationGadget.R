@@ -4,14 +4,27 @@
 epiwaveVisualisationGadget <- function(fit) {
 
 # Define UI for application
-ui <- fluidPage(
+ui <- navbarPage(
+  title="Epiwave",
   theme=shinytheme("flatly"),
-    # Application title
-    titlePanel("Model Evaluation"),
-    mainPanel(
-     plotOutput("plot1")
-    )
+  
+  tabPanel("Prior Predictive Check",
+        sidebarLayout(
+            sidebarPanel(
+                  sliderInput(
+                    "num", label="Number Input:", min=1, value=20, max=40
+                  )
+                 ),
+                 mainPanel(
+                   plotOutput("plot1")
+                 )
+            )
+        ),
+    tabPanel("Convergence Plot"),
+    tabPanel("Posterior Predictive Check")
+  
 )
+
 
 # Define server logic 
 server <- function(input, output, session) {
