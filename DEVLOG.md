@@ -23,4 +23,30 @@ and package `shinythemes`
 
 ** In-depth visual prototyping of the App
 
+## 31 March
+
+### Software Architecture
+
+### #5 Software Design
+
+Software designed to have three (3) core modules/components:
+
+  - `model.R` - A module that fits the model and returns a list variable of parameters
+  - `epiwaveVisualisationGadget.R` - A function based on Shiny that takes the fit model output for visualisation
+  - `main.R` - A main method to run the functions
+
+
+Design is chosen for the following criteria:
+
+  - SRP implementation: one script, one function
+  - Abstraction/Simplicity: Allows the user to jump into the main method for a rough run before calibration 
+  - Reproducibility/Reusability: Functions are not hard-coded for only specific data/values
+
+** Simplification of post-run calibration (re-defining priors) 
+** 2 Phases: Pre-run vs Post-run
+
+- Create navbar and sidebar with a posterior distribution plot and a convergence plot
+
+
+
 
