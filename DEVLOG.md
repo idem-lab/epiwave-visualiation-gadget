@@ -47,6 +47,12 @@ Design is chosen for the following criteria:
 
 - Create navbar and sidebar with a posterior distribution plot and a convergence plot
 
+## 10 April
+
+- Fix external CSS loading, removed Shiny theme
+> link to CSS must be put outside the shiny bootstrap function (Ex.navbarpage()) to refrain from overlapping
+
+** Or use includeCSS() for force-load
 
 
 
