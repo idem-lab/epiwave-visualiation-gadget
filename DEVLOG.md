@@ -54,5 +54,21 @@ Design is chosen for the following criteria:
 
 ** Or use includeCSS() for force-load
 
+- Add sample prior predictive check plot for iris dataset
 
+## 16 Apr 
+
+- Created prior_predictive_check() to store sample parameters and create simulated y
+to be passed on to the gadget for visualisation
+- Changed the prior distribution accordingly to reasonable range
+- Added prior predictive check plots:
+
+1) y_rep simulation plot
+2) line plot
+3) ecdf plot
+
+** Add better features for the plots for readability
+** Integrate JS
+** Time-series analysis
+** Complete Posterior Checks
 

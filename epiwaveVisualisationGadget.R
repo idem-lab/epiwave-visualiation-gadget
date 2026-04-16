@@ -1,7 +1,7 @@
 
 
 # A function that takes in a fit model and visualises it for evaluation 
-epiwaveVisualisationGadget <- function(fit) {
+epiwaveVisualisationGadget <- function(fit, prior_result) {
 
 # Define UI for application
 ui <- fluidPage(
@@ -16,7 +16,8 @@ ui <- fluidPage(
                    sliderInput("num", label="Number Input:", min=1, value=20, max=40)
                  ),
                  mainPanel(
-                   plotOutput("plot1")
+                   plotOutput("plot1"),
+                   plotOutput("plotb")
                  )
               )
       ),
@@ -46,16 +47,45 @@ ui <- fluidPage(
       
 )
 
+x <- iris$Petal.Length
+y <- iris$Sepal.Length
+
+#prior_result <- prior_predictive_check(x,y,n_sims = 100)
+draw <- aperm(as.array(fit$draws),c(1,3,2))
+
 # Define server logic 
 server <- function(input, output, session) {
   
-    draw <- aperm(as.array(fit$draws),c(1,3,2))
+    # x <- iris$Petal.Length
+    # y <- iris$Sepal.Length
+    # 
+    # prior_result <- prior_predictive_check(x,y,n_sims = 100)
+    # draw <- aperm(as.array(fit$draws),c(1,3,2))
     
-    
+    # prior predictive check 
     output$plot1 <- renderPlot({
-      bayesplot::mcmc_trace(fit$draws)
+      ggplot(prior_result$sim_data, aes(x = x, y = y_rep, group = sim)) +
+        geom_line(alpha = 0.1, color = "red") +
+        geom_hline(yintercept = range(y), linetype = "dashed", color = "blue") +
+        theme_minimal() +
+        labs(
+          title = "Prior Predictive Samples",
+          subtitle = "Simulated y values generated from prior parameter draws"
+        )
     })
     
+    # line plot
+    output$plotb <- renderPlot({
+      p <- ggplot(data.frame(x=x,y=y),aes(x=x,y=y))+
+        geom_abline(data=prior_result$prior_samples,aes(intercept=int,slope=coef),
+                    color="red",alpha=0.2)
+      if (!is.null(y)) {
+        p <- p + geom_point(size = 2)
+      }
+      p
+    })
+    
+    # convergence plot
     output$plot2 <- renderPlot({
       bayesplot::mcmc_trace(fit$draws)
     })
