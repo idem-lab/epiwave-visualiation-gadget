@@ -1,0 +1,51 @@
+
+# A function to extract labels for visualisation and mapping
+
+extract_model_info <- function(fit_model, x_obs) {
+  
+  # extract parameter names from fitted greta object
+  pars=colnames(fit_model$fit[[1]])
+  
+  x_mat <- as.matrix(data.frame(x_obs))
+  num_pred <- ncol(x_mat)
+  
+  predictor_names <- names(x_obs)
+  
+  if (is.null(predictor_names) || any(predictor_names == "")) {
+    predictor_names <- paste0("x", 1:num_pred)
+  }
+  
+  param_map <- data.frame(
+    raw_name = pars,
+    
+    display_name = sapply(pars, function(p) {
+      
+      if (grepl("^int", p)) return("Intercept")
+      
+      if (grepl("^coef", p)) {
+        idx <- as.numeric(sub(".*\\[(\\d+),(\\d+)\\]", "\\1", p))
+        return(predictor_names[idx])
+      }
+      
+      if (grepl("^sd", p)) return("Noise Level")
+      
+      return(p)
+    }),
+    
+    type = sapply(pars, function(p) {
+      if (grepl("^int", p)) return("intercept")
+      if (grepl("^coef", p)) return("coef")
+      if (grepl("^sd", p)) return("noise")
+      return("other")
+    }),
+    
+    stringsAsFactors = FALSE
+  )
+  
+  list(
+    pars = pars,
+    num_pred = num_pred,
+    predictor_names = predictor_names,
+    param_map = param_map
+  )
+}

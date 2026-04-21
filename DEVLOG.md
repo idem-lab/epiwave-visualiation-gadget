@@ -72,3 +72,22 @@ to be passed on to the gadget for visualisation
 ** Time-series analysis
 ** Complete Posterior Checks
 
+## 21 Apr
+
+- Receive feedback and guidelines for the tasks
+  - create helper functions
+  - create sidebars (ex. coefficient grouping/checkbox, parameter checkbox)
+  - create home page with text box for additional information and guidelines (landing page) * implemented, need content
+  - convergence summary * to be implemented
+  - modularise functions in Shiny to simplify logic in the gadget
+  
+- created mapping.R and prepare_x()
+- created dummy home page
+- refactored main.R to only process x and y data without data processing; processing to be encapsulated in the functions
+- refactored plots and logic to suit multivariate visualisation and processing
+
+  
+
+
+
+
