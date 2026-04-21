@@ -1,28 +1,33 @@
 
+source("prior_pred.R")
 
 # A function that takes in a fit model and visualises it for evaluation 
-epiwaveVisualisationGadget <- function(fit, prior_result) {
+epiwaveVisualisationGadget <- function(fit, prior_results) {
 
 # Define UI for application
 ui <- fluidPage(
-  
       tags$head(includeCSS("www/styles.css")), # external css
       
       navbarPage(
+      id="main_nav",
       title="Epiwave",
+      
+      tabPanel(
+        "Home"
+        ),
+      
       tabPanel("Prior Predictive Check",
                sidebarLayout(
                  sidebarPanel(
                    sliderInput("num", label="Number Input:", min=1, value=20, max=40)
                  ),
                  mainPanel(
-                   plotOutput("plot1"),
-                   plotOutput("plotb")
+                   plotOutput("plot1")
                  )
               )
       ),
       
-        tabPanel("Convergence Plot",
+        tabPanel("Convergence Diagnostics",
               sidebarLayout(
                   sidebarPanel(
                      sliderInput("num", label="Number Input:", min=1, value=20, max=40)
@@ -50,39 +55,34 @@ ui <- fluidPage(
 x <- iris$Petal.Length
 y <- iris$Sepal.Length
 
-#prior_result <- prior_predictive_check(x,y,n_sims = 100)
 draw <- aperm(as.array(fit$draws),c(1,3,2))
 
 # Define server logic 
 server <- function(input, output, session) {
   
-    # x <- iris$Petal.Length
-    # y <- iris$Sepal.Length
-    # 
-    # prior_result <- prior_predictive_check(x,y,n_sims = 100)
-    # draw <- aperm(as.array(fit$draws),c(1,3,2))
-    
+  observeEvent(input$go_prior, {
+    updateNavbarPage(session, "main_nav", selected = "Prior Predictive Check")
+  })
+  
+  observeEvent(input$go_conv, {
+    updateNavbarPage(session, "main_nav", selected = "Convergence Diagnostics")
+  })
+  
+  observeEvent(input$go_post, {
+    updateNavbarPage(session, "main_nav", selected = "Posterior Predictive Check")
+  })
+
     # prior predictive check 
     output$plot1 <- renderPlot({
-      ggplot(prior_result$sim_data, aes(x = x, y = y_rep, group = sim)) +
+      ggplot(prior_results$sim_data, aes(x = x, y = y_rep, group = sim)) +
         geom_line(alpha = 0.1, color = "red") +
         geom_hline(yintercept = range(y), linetype = "dashed", color = "blue") +
         theme_minimal() +
+        
         labs(
           title = "Prior Predictive Samples",
           subtitle = "Simulated y values generated from prior parameter draws"
         )
-    })
-    
-    # line plot
-    output$plotb <- renderPlot({
-      p <- ggplot(data.frame(x=x,y=y),aes(x=x,y=y))+
-        geom_abline(data=prior_result$prior_samples,aes(intercept=int,slope=coef),
-                    color="red",alpha=0.2)
-      if (!is.null(y)) {
-        p <- p + geom_point(size = 2)
-      }
-      p
     })
     
     # convergence plot
