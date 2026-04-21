@@ -6,8 +6,13 @@ library(shinythemes)
 library(ggplot2)
 library(bayesplot)
 
+source('fit_model.R')
+source('prior.R')
+source('epiwaveVisualisationGadget.R')
+
 # Populate with real data and store return values in a variable
-fit <- fit_model(iris$Petal.Length,iris$Sepal.Length)
+x_mat <- cbind(iris$Petal.Length, iris$Sepal.Width)
+fit <- fit_model(x_mat, iris$Sepal.Length)
 
 # Prior Predictive Checks
 lines_df <- priors(iris$Petal.Length)
