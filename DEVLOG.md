@@ -80,14 +80,22 @@ to be passed on to the gadget for visualisation
   - create home page with text box for additional information and guidelines (landing page) * implemented, need content
   - convergence summary * to be implemented
   - modularise functions in Shiny to simplify logic in the gadget
+  - allow the user to download and copy the code and image for the plot 
   
 - created mapping.R and prepare_x()
 - created dummy home page
 - refactored main.R to only process x and y data without data processing; processing to be encapsulated in the functions
 - refactored plots and logic to suit multivariate visualisation and processing
 
-  
 
+# 28 Apr
 
+- Added external JS file
+- Refactored the structure to resemble epiwave objects 
+- Refactored 2 helper functions: map() and prepare_x() to a single `extract_model_info` to dynamically read and store coef and map the labels into one df
+- Add working download plot and screenshot button in Shiny
 
-
+** Work on prior_check (currently error)
+** Work on sidebar - checkboxes and grouping
+** Code for the plot download button
+** Customise download button
