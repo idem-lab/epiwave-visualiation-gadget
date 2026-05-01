@@ -1,0 +1,20 @@
+# Load dependencies
+library(greta)
+library(shiny)
+library(bslib)
+library(shinythemes)
+library(ggplot2)
+library(bayesplot)
+library(shinyscreenshot)
+
+# Load functions
+source('fit_model.R')
+source('prior_check.R')
+source('epiwaveVisualisationGadget.R')
+source('extract_model_info.R')
+source('download_plot.R')
+source('plot_convergence.R')
+source('plot_prior_check.R')
+source('plot_posterior_check.R')
+source('download_plot_code.R')
+source('copy_plot_code.R')
