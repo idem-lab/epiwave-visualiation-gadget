@@ -4,6 +4,8 @@ epiwaveVisualisationGadget <- function(fit_model=NULL,
                                        info=NULL, 
                                        prior_results=NULL) {
 
+text <- readLines("homepage.txt")
+
 # Define UI for application
 ui <- fluidPage(
       tags$head(includeCSS("www/styles.css"), includeScript("www/script.js")), # external css
@@ -11,7 +13,8 @@ ui <- fluidPage(
       navbarPage(id="main_nav", title="Epiwave",
       
       tabPanel(
-        "Home"
+        "Home",
+        verbatimTextOutput("txtDisplay")
         ),
       
       tabPanel("Prior Predictive Check",
@@ -84,6 +87,8 @@ ui <- fluidPage(
 
 # Define server logic 
 server <- function(input, output, session) {
+  
+  output$txtDisplay <- renderText({paste(text,collapse="\n")})
   
   #
   # Prior Predictive Check plot
