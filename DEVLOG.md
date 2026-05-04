@@ -88,7 +88,7 @@ to be passed on to the gadget for visualisation
 - refactored plots and logic to suit multivariate visualisation and processing
 
 
-# 28 Apr
+## 28 Apr
 
 - Added external JS file
 - Refactored the structure to resemble epiwave objects 
@@ -99,3 +99,33 @@ to be passed on to the gadget for visualisation
 ** Work on sidebar - checkboxes and grouping
 ** Code for the plot download button
 ** Customise download button
+
+
+## 1 May
+
+- Refactored existing plot functions to external R scripts
+- Create a separate `downloadPlot()` for flexible plot download options and choosing of default file name
+- Create `prior_check.R` for prior predictive checking that returns the parameters and y_sim
+    * Not for temporal analysis yet
+- Create `plot_prior_check.R` to plot parameter distributions
+    * filename later to be refactored according to their functionalities
+- Make inputs=NULL to enable individual plotting
+- Add working download plot and screenshot button for every tab
+- Add `setup.R` to load functions and dependencies in one go
+- Add a button to allow the user to copy the code to their clipboard temporarily
+    * need fix
+
+** Refactor file names and directory 
+
+## 4 May
+
+- Move helper functions to `R` directory, deleted `setup.R`
+- Add a text field that is rendered from external `.txt` in the home page
+- Add a sidebar that reads the parameter and allows user to tick on/off coef of interest for all 3 tabs
+- Fix copy code feature and create fully functional download plot/code
+- Refactor prior_check.R to resemble fit_model operation 
+- Refactor plot functions to be consistently receiving the parameters from `param_map`
+
+** Work on diagnose_model.R/convergence diagnostics
+
+
