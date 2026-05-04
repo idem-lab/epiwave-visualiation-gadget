@@ -1,6 +1,7 @@
-
+#
 # Function to fit model and return fit obj
-# Assume that x == list
+#
+
 fit_model <- function (x, y, n_samples=1000,chains=4) {
   
   # set up the greta model
@@ -26,7 +27,6 @@ fit_model <- function (x, y, n_samples=1000,chains=4) {
     model=m,
     fit=fit
     # more return values in epiwave
-    # pars=colnames(fit[[1]])
   )
   
   return(fit_output)
