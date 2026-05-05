@@ -13,3 +13,85 @@ body {
 .navbar-brand{
   color:#f6bf3e !important;
 }
+
+#buttons {
+  padding: 20px 20px 20px 0px;
+}
+
+.diag-badge {
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 130px;
+}
+
+.diag-badge-label {
+  font-size: 12px;
+}
+
+.diag-badge-value {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.diag-badge-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.diag-success {
+  background: #d1fae5 !important;
+  border: 0.5px solid #6ee7b7 !important;
+  color: #065f46 !important;
+}
+.diag-warning {
+  background: #fef3c7 !important;
+  border: 0.5px solid #fcd34d !important;
+  color: #92400e !important;
+}
+.diag-danger {
+  background: #fee2e2 !important;
+  border: 0.5px solid #fca5a5 !important;
+  color: #991b1b !important;
+}
+.diag-neutral {
+  background: #f3f4f6 !important;
+  border: 0.5px solid #d1d5db !important;
+  color: #111827 !important;
+}
+
+.notes-box {
+  font-size: 13px;
+  margin-bottom: 1rem;
+}
+
+.notes-box ul {
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.notes-box li {
+  margin-bottom: 4px;
+  color: #374151;
+}
+
+table.shiny-table {
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+}
+
+table.shiny-table th {
+  color: #374151;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+table.shiny-table td {
+  color: #374151;
+}
