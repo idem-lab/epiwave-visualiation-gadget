@@ -1,10 +1,19 @@
-
-
+#' Title
+#'
+#' @param fit_model 
+#' @param info 
+#' @param prior_results 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 epiwaveVisualisationGadget <- function(fit_model=NULL, 
                                        info=NULL, 
                                        prior_results=NULL) {
 
 text <- readLines("homepage.txt")
+f_csv <- read.csv("data.csv")
 
 # Define UI for application
 ui <- fluidPage(
@@ -14,7 +23,8 @@ ui <- fluidPage(
       
       tabPanel(
         "Home",
-        verbatimTextOutput("txtDisplay")
+        verbatimTextOutput("txtDisplay"),
+        tableOutput("csvDisplay")
         ),
       
       tabPanel("Prior Predictive Check",
@@ -50,6 +60,7 @@ ui <- fluidPage(
                      )
                     ),
                   mainPanel(
+                     htmlOutput("diagBadges"),
                      plotOutput("plotConv"),
                      div( id ="buttons",
                      downloadButton("downloadConv", "Download Plot"),
@@ -89,6 +100,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   output$txtDisplay <- renderText({paste(text,collapse="\n")})
+  output$csvDisplay <- renderTable(f_csv)
   
   #
   # Prior Predictive Check plot
@@ -113,6 +125,31 @@ server <- function(input, output, session) {
   #
   # Convergence plot
   #
+  
+  
+  badge <- function(label, value, status) {
+    tags$div(
+      class = paste("diag-badge", paste0("diag-", status)),
+      tags$span(class = "diag-badge-label", label),
+      tags$span(class = "diag-badge-value", value)
+    )
+  }
+  
+  output$diagBadges <- renderUI({
+    max_rhat  <- max(fit_model$fit_summary[, "Rhat"],  na.rm = TRUE)
+    min_neff  <- min(fit_model$fit_summary[, "n_eff"], na.rm = TRUE)
+    converged <- max_rhat < 1.1 && min_neff > 100
+    
+    tags$div(
+      class = "diag-badge-container",
+      badge("Overall",   if (converged) "Converged" else "Issues detected",
+            if (converged) "success" else "danger"),
+      badge("Max R-hat", round(max_rhat, 3),
+            if (max_rhat < 1.1) "neutral" else "warning"),
+      badge("Min n_eff", round(min_neff, 0),
+            if (min_neff > 100) "neutral" else "warning")
+    )
+  })
   
   convergence_plot <- reactive({
     create_convergence_plot(fit_model$fit,pars=input$convPars)
