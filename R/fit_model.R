@@ -1,10 +1,17 @@
-#
-# Function to fit model and return fit obj
-#
-
+#' Fit the model
+#'
+#' @param x 
+#' @param y 
+#' @param n_samples 
+#' @param chains 
+#'
+#' @returns 
+#' @export
+#'
+#' @examples
 fit_model <- function (x, y, n_samples=1000,chains=4) {
   
-  # set up the greta model
+  # Convert to greta data object
   x_data <- as_data(as.matrix(data.frame(x)))
   y_data <- as_data(y)
   
@@ -18,15 +25,17 @@ fit_model <- function (x, y, n_samples=1000,chains=4) {
   mean <- int + x_data %*% coef
   distribution(y_data) <- normal(mean,sd) 
   
-  # greta model fit
+  # Fit the model
   m <- model(int, coef, sd)
   fit <- mcmc(m, n_samples = n_samples, chains = chains)
   
-  # return the outputs
+  # Convert mcmc fit object in rstan style 
+  fit_summary <- summarise_greta(fit)
+  
   fit_output <- list(
     model=m,
-    fit=fit
-    # more return values in epiwave
+    fit=fit,
+    fit_summary=fit_summary
   )
   
   return(fit_output)
