@@ -1,4 +1,4 @@
 Epiwave Visualisation Gadget
 
-This is it!
+Hello! I am read from a text file.
 
