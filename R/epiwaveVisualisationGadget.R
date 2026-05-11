@@ -1,4 +1,4 @@
-#' Title
+#' Run Shiny gadget
 #'
 #' @param fit_model 
 #' @param info 
@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @examples
+#' 
 epiwaveVisualisationGadget <- function(fit_model=NULL, 
                                        info=NULL, 
                                        prior_results=NULL) {
@@ -17,15 +18,28 @@ f_csv <- read.csv("data.csv")
 
 # Define UI for application
 ui <- fluidPage(
-      tags$head(includeCSS("www/styles.css"), includeScript("www/script.js")), # external css
+      # Read external files
+      tags$head(includeCSS("www/styles.css"), includeScript("www/script.js")),
+      
+      #
+      # Navigation bar
+      #
       
       navbarPage(id="main_nav", title="Epiwave",
+      
+      #
+      # Home tab
+      #
       
       tabPanel(
         "Home",
         verbatimTextOutput("txtDisplay"),
         tableOutput("csvDisplay")
         ),
+      
+      #
+      # Prior Predictive Tab
+      #
       
       tabPanel("Prior Predictive Check",
                sidebarLayout(
@@ -49,10 +63,14 @@ ui <- fluidPage(
                  ))
               )),
       
-        tabPanel("Convergence Diagnostics",
+      #
+      # Convergence Diagnostics Tab
+      #
+      
+      tabPanel("Convergence Diagnostics",
               sidebarLayout(
-                  sidebarPanel(
-                     checkboxGroupInput(
+                sidebarPanel(
+                  checkboxGroupInput(
                        "convPars", label="Parameters:",choices=setNames(
                          info$param_map$raw_name,
                          info$param_map$display_name),
@@ -65,45 +83,51 @@ ui <- fluidPage(
                      div( id ="buttons",
                      downloadButton("downloadConv", "Download Plot"),
                      downloadButton("downloadConvCode", "Download Code"),
-                     actionButton("copyConvCode", "Copy Code"),
-                     actionButton("ssConv","Screenshot")
+                     actionButton("copyConvCode", "Copy Code")
                    ))
                 )
             ),
       
-        tabPanel("Posterior Predictive Check",
-                 sidebarLayout(
-                   sidebarPanel(
-                     checkboxGroupInput(
+      #
+      # Posterior Predictive Tab
+      #
+      
+      tabPanel("Posterior Predictive Check",
+              sidebarLayout(
+                sidebarPanel(
+                  checkboxGroupInput(
                        "postPars", label="Parameters:",
                        choices  = setNames(info$param_map$raw_name, 
                                            info$param_map$display_name),
                        selected = info$param_map$raw_name
                      )
                    ),
-                   mainPanel(
-                     plotOutput("plotPost"),
-                     div( id ="buttons",
-                     downloadButton("downloadPost", "Download Plot"),
-                     downloadButton("downloadPostCode", "Download Code"),
-                     actionButton("copyPostCode", "Copy Code"),
-                     actionButton("ssPost","Screenshot")
-                     )
-                   )
-                )
-            ) 
-      ) #navbar
+                  mainPanel(
+                       plotOutput("plotPost"),
+                       div( id ="buttons",
+                       downloadButton("downloadPost", "Download Plot"),
+                       downloadButton("downloadPostCode", "Download Code"),
+                       actionButton("copyPostCode", "Copy Code")
+                       )
+                    )
+                 )
+              ) 
+    )
 )
 
 
 # Define server logic 
 server <- function(input, output, session) {
   
+  #
+  # Home page tab
+  #
+
   output$txtDisplay <- renderText({paste(text,collapse="\n")})
   output$csvDisplay <- renderTable(f_csv)
   
   #
-  # Prior Predictive Check plot
+  # Prior Predictive Check tab
   #
   
   prior_param_plot <- reactive({
@@ -120,7 +144,6 @@ server <- function(input, output, session) {
   observeEvent(input$copyPriorCode,{
     copy_plot_code("R/plot_prior_check.R", session)
   })
-  observeEvent(input$ssPrior,{screenshot()})
   
   #
   # Convergence plot
@@ -165,9 +188,7 @@ server <- function(input, output, session) {
   observeEvent(input$copyConvCode,{
     copy_plot_code("R/plot_convergence.R", session)
   })
-  # Allow user to screenshot the current page of the App
-  observeEvent(input$ssConv,{screenshot()})
-    
+  
   #
   # Posterior plot
   #
@@ -185,7 +206,7 @@ server <- function(input, output, session) {
     copy_plot_code("R/plot_posterior_check.R", session)
   })
   output$downloadPostCode <- download_plot_code("R/plot_posterior_check.R")
-  observeEvent(input$ssPost,{screenshot()})
+  
 }
 
 # Run the application 
