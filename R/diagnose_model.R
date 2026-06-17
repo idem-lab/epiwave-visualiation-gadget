@@ -1,3 +1,17 @@
+#' Diagnose MCMC convergence for a fitted model
+#'
+#' @param fitted_model A fitted model object containing a `fit_summary`
+#'   element with `Rhat` and `n_eff` columns.
+#' @param rhat_threshold R-hat values above this are flagged as issues.
+#'   Default is `1.1`.
+#' @param eff_sample_threshold n_eff values below this are flagged as
+#'   issues. Default is `100`.
+#'
+#' @returns An invisible list of convergence diagnostics (R-hat issues,
+#'   n_eff issues, max R-hat, min n_eff, and the full summary)
+#' @export
+#'
+#' @examples
 diagnose_model <- function(fitted_model,
                            rhat_threshold = 1.1,
                            eff_sample_threshold = 100) {

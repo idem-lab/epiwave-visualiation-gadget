@@ -2,11 +2,14 @@
 #'
 #' @param prior_results A list containing prior samples
 #' @param pars A vector of parameter names to plot
+#' @param param_map Optional data frame mapping raw parameter names to
+#'   display names (with `raw_name` and `display_name` columns).
 #'
 #' @returns A ggplot object
 #' @export
 #'
 #' @examples
+#' prior_param_plot <- reactive({plot_prior_params(prior_results,pars=input$priorPars)})
 plot_prior_params <- function(prior_results, pars=NULL, param_map=NULL) {
   
   samples <- prior_results$prior_samples |> dplyr::select(-sim)

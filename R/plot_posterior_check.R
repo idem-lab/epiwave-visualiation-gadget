@@ -1,13 +1,18 @@
-#' Title
+#' Plot posterior density distributions for selected parameters
 #'
-#' @param model 
-#' @param pars 
+#' @param model A fitted model object containing a `fit` element compatible
+#'   with `as.array()` (e.g. an rstan/CmdStanR-style fit with chain draws).
+#' @param pars A vector of parameter names to plot. If `NULL`, all
+#'   parameters in the fit are plotted.
+#' @param param_map Optional data frame mapping raw parameter names to
+#'   display names (with `raw_name` and `display_name` columns).
 #'
-#' @returns
+#' @returns A `bayesplot`/ggplot object showing overlaid posterior density
+#'   plots by chain
 #' @export
 #'
 #' @examples
-#' 
+#' posterior_plot <- reactive({create_posterior_plot(fit_model, pars=input$postPars)})
 create_posterior_plot <- function(model, pars=NULL, param_map=NULL) {
   draw <- aperm(as.array(model$fit), c(1,3,2))
   

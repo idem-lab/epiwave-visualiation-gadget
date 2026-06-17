@@ -1,13 +1,17 @@
-#' Title
+#' Plot convergence diagnostics for MCMC chains
 #'
-#' @param model 
-#' @param pars 
+#' @param model A fitted model object, either containing a `fit` element
+#'   (a list of per-chain matrices) or being such a list directly.
+#' @param pars A vector of parameter names to plot. If `NULL`, all
+#'   parameters in the fit are plotted.
+#' @param param_map Optional data frame mapping raw parameter names to
+#'   display names (with `raw_name` and `display_name` columns).
 #'
-#' @returns
+#' @returns A `bayesplot`/ggplot object showing MCMC trace plots by chain
 #' @export
 #'
 #' @examples
-#' 
+#'   convergence_plot <- reactive({create_convergence_plot(fit_model$fit,pars=input$convPars)})
 create_convergence_plot <- function(model, pars=NULL, param_map=NULL) {
   
   if (!is.null(model$fit)) {

@@ -1,13 +1,13 @@
 #' Download the current plot as a PDF file
 #'
-#' @param p 
-#' @param fname 
+#' @param p A reactive/function that returns the plot to render.
+#' @param fname Base file name (date and ".pdf" are appended).
 #'
 #' @returns A download handler for the plot PDF
 #' @export
 #'
 #' @examples
-
+#'output$downloadPriorParam <- download_plot_img(p=prior_param_plot, fname="prior-param-plot")
 download_plot_img <- function(p, fname) {
   downloadHandler(
     filename = function () {
@@ -22,15 +22,20 @@ download_plot_img <- function(p, fname) {
   )
 }
 
-#' Download the R code as .R file used to generate the current plot
+#' Download the R code used to generate the current plot
 #'
-#' @param file The path to the R script file
+#' @param template_path Path to the template R script.
+#' @param pars_input Reactive/function returning the parameter values to insert.
+#' @param pars_placeholder Line in the template to replace with parameters.
+#' @param call_placeholder Line in the template to replace with the function call.
+#' @param pars_replacement Glue string used to build the parameter replacement.
+#' @param call_replacement Glue string used to build the call replacement.
 #'
 #' @returns A download handler (Button) for the specified file
 #' @export
 #'
 #' @examples
-#' 
+#' output$downloadPriorParamCode <- download_plot_code("R/plot_prior_check.R")
 download_plot_code <- function(template_path, pars_input,
                                pars_placeholder  = "# __PARS__",
                                call_placeholder  = "# __CALL__",

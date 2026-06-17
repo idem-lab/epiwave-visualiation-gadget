@@ -1,3 +1,18 @@
+#' Run prior predictive checks
+#'
+#' Simulates data from the model priors before fitting the model. The output is
+#' used to check whether the chosen priors generate reasonable values.
+#'
+#' @param x_obs Predictor variables used in the model.
+#' @param y Optional observed response variable. Currently unused.
+#' @param n_sims Number of prior simulations to generate. Default is 100.
+#'
+#' @returns A list containing prior parameter samples and simulated response data.
+#'
+#' @export
+#'
+#' @examples
+#' prior_results <- prior_check(x_obs=observation_list,n_sims=100)
 prior_check <- function(x_obs, y = NULL, n_sims = 100) {
   x_mat <- as.matrix(data.frame(x_obs))
   n_obs  <- nrow(x_mat)
