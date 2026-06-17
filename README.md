@@ -2,9 +2,7 @@
 
 ## Project Structure
 
-## Project Structure
-
-```
+```text
 project/
 │
 ├── Main.R                          # Main workflow script
@@ -32,22 +30,47 @@ project/
     └── validate_model.R
 ```
 
-## Setup
+## Getting Started
 
-Run everything in `Main.R`
+The recommended workflow is to run all steps from `Main.R`.
 
-1. Initial setup - download packages
-2. Create a list of x observation 
-3. Prior Predictive Checking 
-- If the gadget is run at this stage, only the prior tab is going to be populated. It is normal for the other tabs to show none.
-4. Fit the model - returns a list
-5. Map the information into a data frame for consistency and integrity of the data
-6. Run the gadget 
+### 1. Install and Load Dependencies
 
-Objects in list format
+Ensure all required packages are installed and loaded before proceeding.
+
+### 2. Prepare Input Data
+
+Create a list of predictor observations (`x_obs`) to be supplied to the model.
+
+### 3. Perform Prior Predictive Checks
+
+Run the prior predictive simulation to assess whether the specified priors generate plausible outcomes.
+
+**Note:**
+If the gadget is launched at this stage, only the **Prior Predictive Check** tab will contain results. All remaining tabs will remain empty until a model has been fitted. This is expected behaviour.
+
+### 4. Fit the Model
+
+Fit the model using the prepared observations. The fitting process returns model outputs in list format.
+
+### 5. Standardise Outputs
+
+Map the returned objects into a consistent data frame structure. This ensures compatibility across visualisation, diagnostic, and reporting components.
+
+### 6. Launch the Gadget
+
+Run the visualisation gadget to explore prior checks, posterior checks, diagnostics, and model outputs.
+
+## Data Structure
+
+Model outputs and intermediate objects are primarily stored as lists before being transformed into standardised data frames for downstream visualisation and analysis.
 
 ## Flow Diagram
 
 ![diagram](raw/diagram.png)
 
-Contact via tkdel34@gmail.com for any questions
+## Support
+
+For questions, feedback, or bug reports, please contact:
+
+**[tkdel34@gmail.com](mailto:tkdel34@gmail.com)**
