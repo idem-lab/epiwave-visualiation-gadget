@@ -4,31 +4,33 @@
 
 ## Project Structure
 
+```
 project/
 │
-├── Main.R                      # Main workflow script; runs the complete analysis and launches the gadget
+├── Main.R                          # Main workflow script
 │
-├── raw/
-│   ├── data.csv                # Example input dataset
-│   ├── homepage.txt            # Home page content placeholder
-│   └── diagram.png             # Project workflow diagram
+├── raw/                            # Placeholder and static assets
+│   ├── data.csv
+│   ├── homepage.txt
+│   └── diagram.png
 │
-├── www/
-│   ├── style.css               # Custom styling for the gadget UI
-│   └── script.js               # JavaScript utilities and notifications
+├── www/                            # Front-end resources
+│   ├── style.css
+│   └── script.js
 │
-└── R/
-    ├── diagnose_model.R        # Model diagnostic utilities
-    ├── download_plot.R         # Plot export/download functions
-    ├── epiwaveVisualisationGadget.R  # Main Shiny gadget
-    ├── extract_model_info.R    # Extract model outputs and metadata
-    ├── fit_model.R             # Model fitting routines
-    ├── plot_convergence.R      # MCMC convergence visualisations
-    ├── plot_posterior_check.R  # Posterior predictive checks
-    ├── plot_prior_check.R      # Prior predictive checks
-    ├── prior_check.R           # Prior simulation utilities
-    ├── summarise_greta.R       # Summary methods for greta models
-    └── validate_model.R        # Input and model validation
+└── R/                              # Core application logic
+    ├── diagnose_model.R
+    ├── download_plot.R
+    ├── epiwaveVisualisationGadget.R
+    ├── extract_model_info.R
+    ├── fit_model.R
+    ├── plot_convergence.R
+    ├── plot_posterior_check.R
+    ├── plot_prior_check.R
+    ├── prior_check.R
+    ├── summarise_greta.R
+    └── validate_model.R
+```
 
 ## Setup
 
